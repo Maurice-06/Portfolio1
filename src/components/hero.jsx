@@ -25,7 +25,7 @@ const Hero = () => {
               <div className="w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full mx-auto overflow-hidden border-8 border-white shadow-2xl">
                 {/* Remplacez ceci par votre photo */}
                 <img
-                  src="/images/Profil.png"
+                  src="/Portfolio1/images/Profil.png"
                   alt="Maurice Birame DIOUF"
                   className="w-full h-full object-cover"
                 />
