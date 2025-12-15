@@ -1,12 +1,10 @@
-
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaDownload } from 'react-icons/fa';
-
+import profilImage from "../assets/Profil.png"; // Import de l'image
 
 const Hero = () => {
-
   const handleDownloadCV = () => {
     // Ouvrir le CV dans une nouvelle fenêtre
-    window.open('/ cv/CV Maurice Birame DIOUF.pdf', '_blank');
+    window.open('/cv/CV Maurice Birame DIOUF.pdf', '_blank');
   };
 
   const socialLinks = [
@@ -23,20 +21,18 @@ const Hero = () => {
           <div className="lg:w-2/5 order-2 lg:order-1">
             <div className="relative">
               <div className="w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full mx-auto overflow-hidden border-8 border-white shadow-2xl">
-                {/* Remplacez ceci par votre photo */}
+                {/* Image importée depuis src/assets */}
                 <img
-                  src="/Portfolio1/images/Profil.png"
+                  src={profilImage} // Utilisation de l'image importée
                   alt="Maurice Birame DIOUF"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    console.error("Image non chargée, chemin:", profilImage);
+                    // Fallback vers le chemin public
+                    e.target.src = "/images/Profil.png";
+                  }}
                 />
               </div>
-
-
-              {/* Badges d'info flottants */}
-
-
-
-
             </div>
 
             {/* Section Réseaux Sociaux sous la photo */}
