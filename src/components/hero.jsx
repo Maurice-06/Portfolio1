@@ -66,7 +66,7 @@ const Hero = () => {
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-300 mb-8 font-medium">
-              Data Analyst | Full-Stack Developer
+              Data Analyst
             </p>
 
             <p className="text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
