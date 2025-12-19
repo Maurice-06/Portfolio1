@@ -1,12 +1,13 @@
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaHeart } from 'react-icons/fa';
+
+import { FaGithub, FaLinkedin, FaEnvelope, FaHeart } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+
   const socialLinks = [
     { icon: <FaGithub />, href: 'https://github.com/Maurice-06', label: 'GitHub' },
     { icon: <FaLinkedin />, href: 'https://www.linkedin.com/in/maurice-birame-diouf-a967a6354/', label: 'LinkedIn' },
-    { icon: <FaTwitter />, href: 'https://twitter.com/ton-username', label: 'Twitter' },
     { icon: <FaEnvelope />, href: 'mailto:mauricebiramed@gmail.com', label: 'Email' },
   ];
 

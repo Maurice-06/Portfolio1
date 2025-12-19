@@ -1,4 +1,5 @@
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaDownload } from 'react-icons/fa';
+
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
 import profilImage from "../assets/Profil.png"; // Import de l'image
 
 const Hero = () => {
@@ -7,10 +8,10 @@ const Hero = () => {
     window.open('/cv/CV Maurice Birame DIOUF.pdf', '_blank');
   };
 
+
   const socialLinks = [
     { icon: <FaGithub />, href: 'https://github.com/Maurice-06', label: 'GitHub' },
     { icon: <FaLinkedin />, href: 'https://www.linkedin.com/in/maurice-birame-diouf-a967a6354/', label: 'LinkedIn' },
-    { icon: <FaTwitter />, href: 'https://x.com/bir868', label: 'Twitter' },
   ];
 
   return (

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from 'react-icons/fa';
+
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+
 
   const socialLinks = [
     {
@@ -25,14 +27,6 @@ const Contact = () => {
       username: 'Maurice Birame DIOUF',
       color: 'from-blue-700 to-blue-800',
       hoverColor: 'hover:from-blue-800 hover:to-blue-900'
-    },
-    {
-      icon: <FaTwitter className="text-2xl" />,
-      href: 'https://x.com/bir868',
-      label: 'Twitter',
-      username: 'bir868',
-      color: 'from-sky-500 to-sky-600',
-      hoverColor: 'hover:from-sky-600 hover:to-sky-700'
     },
     {
       icon: <FaEnvelope className="text-2xl" />,
