@@ -1,83 +1,51 @@
-import { FaGraduationCap, FaCertificate, FaUniversity } from 'react-icons/fa';
+import { FaCertificate, FaGraduationCap } from 'react-icons/fa';
+import useReveal from '../hooks/useReveal';
+import { certifications, education } from '../data/profile';
 
 const Education = () => {
-  const education = [
-    {
-      year: "En cours",
-      title: "Licence 3 en Informatique et Sciences des Données",
-      institution: "BEM TECH | School of Technology",
-      icon: <FaUniversity className="text-2xl" />,
-      description: "Spécialisation en analyse de données et machine learning"
-    },
-    {
-      year: "2024",
-      title: "Licence 2 en Informatique et Sciences des Données",
-      institution: "BEM TECH | School of Technology",
-      icon: <FaGraduationCap className="text-2xl" />,
-      description: "Approfondissement des bases de données et statistiques"
-    },
-    {
-      year: "2023",
-      title: "Licence 1 en Informatique et Sciences des Données",
-      institution: "BEM TECH | School of Technology",
-      icon: <FaGraduationCap className="text-2xl" />,
-      description: "Fondamentaux en programmation et mathématiques"
-    },
-    {
-      year: "2022",
-      title: "Baccalauréat L2 en Sciences Sociales et Humaines",
-      institution: "Institution Immaculée Conception de Dakar",
-      icon: <FaGraduationCap className="text-2xl" />,
-      description: "Mention Bien"
-    },
-    {
-      year: "2023",
-      title: "Certification C50 Harvard / Python",
-      institution: "Harvard University (CS50)",
-      icon: <FaCertificate className="text-2xl" />,
-      description: "Introduction à l'informatique et programmation Python"
-    }
-  ];
+  const ref = useReveal();
 
   return (
-    <section id="education" className="bg-gradient-to-br from-gray-900 to-black">
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Parcours Académique</h2>
-          <p className="section-subtitle">
-            Une formation solide alliant théorie et pratique dans le domaine des données
-          </p>
-        </div>
+    <section id="education" className="section">
+      <div ref={ref} className="container-x reveal">
+        <span className="eyebrow">Formation</span>
+        <h2 className="section-title">Parcours académique & certifications</h2>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-400 to-blue-600 hidden md:block"></div>
-
-            {education.map((item, index) => (
-              <div key={index} className={`relative mb-12 md:mb-16 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:pl-8'}`}>
-                <div className="md:w-1/2">
-                  {/* Timeline dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 md:translate-x-0 md:left-auto 
-                                w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full 
-                                border-4 border-white shadow-lg flex items-center justify-center z-10">
-                    {item.icon}
-                  </div>
-
-                  <div className={`bg-white rounded-2xl shadow-lg p-6 ml-10 md:ml-0 ${index % 2 === 0 ? 'md:mr-10' : 'md:ml-10'}`}>
-                    <div className="inline-block mb-3">
-                      <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-bold px-4 py-1 rounded-full">
-                        {item.year}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-blue-600 font-semibold mb-3">{item.institution}</p>
-                    <p className="text-gray-600">{item.description}</p>
-                  </div>
-                </div>
-              </div>
+        <div className="mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <ol className="relative space-y-8 border-l border-white/10 pl-8">
+            {education.map((item) => (
+              <li key={item.title} className="relative">
+                <span className="absolute -left-[41px] grid h-5 w-5 place-items-center rounded-full border border-accent/50 bg-ink-950">
+                  <span className="h-2 w-2 rounded-full bg-accent" />
+                </span>
+                <p className="font-mono text-xs uppercase tracking-widest text-accent">{item.period}</p>
+                <h3 className="mt-2 text-lg font-semibold text-white">{item.title}</h3>
+                <p className="mt-1 flex items-center gap-2 text-sm text-slate-300">
+                  <FaGraduationCap className="text-slate-500" /> {item.institution}
+                </p>
+                {item.description && <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.description}</p>}
+              </li>
             ))}
+          </ol>
+
+          <div className="card h-fit p-6">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Certifications</h3>
+            <ul className="mt-5 divide-y divide-white/[0.06]">
+              {certifications.map((c) => (
+                <li key={c.title} className="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
+                  <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg bg-accent-soft text-accent">
+                    <FaCertificate />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-white">{c.title}</p>
+                    <p className="text-sm text-slate-400">{c.issuer}</p>
+                  </div>
+                  <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-0.5 text-xs font-medium text-amber-300">
+                    {c.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

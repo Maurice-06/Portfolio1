@@ -1,110 +1,84 @@
-
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
-import profilImage from "../assets/Profil.png"; // Import de l'image
+import { FaArrowRight, FaFileAlt, FaGithub, FaLinkedin, FaMapMarkerAlt } from 'react-icons/fa';
+import profilImage from '../assets/Profil.jpg';
+import { profile, stats } from '../data/profile';
 
 const Hero = () => {
-  const handleDownloadCV = () => {
-    // Ouvrir le CV dans une nouvelle fenêtre
-    window.open('/cv/CV Maurice Birame DIOUF.pdf', '_blank');
-  };
-
-
-  const socialLinks = [
-    { icon: <FaGithub />, href: 'https://github.com/Maurice-06', label: 'GitHub' },
-    { icon: <FaLinkedin />, href: 'https://www.linkedin.com/in/maurice-birame-diouf-a967a6354/', label: 'LinkedIn' },
-  ];
-
   return (
-    <section id="home" className="min-h-screen flex items-center pt-16">
-      <div className="section-container">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Section Photo et Infos */}
-          <div className="lg:w-2/5 order-2 lg:order-1">
-            <div className="relative">
-              <div className="w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full mx-auto overflow-hidden border-8 border-white shadow-2xl">
-                {/* Image importée depuis src/assets */}
-                <img
-                  src={profilImage} // Utilisation de l'image importée
-                  alt="Maurice Birame DIOUF"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    console.error("Image non chargée, chemin:", profilImage);
-                    // Fallback vers le chemin public
-                    e.target.src = "/images/Profil.png";
-                  }}
-                />
-              </div>
-            </div>
+    <section id="home" className="relative overflow-hidden pt-16">
+      {/* Fond : grille + halo */}
+      <div className="pointer-events-none absolute inset-0 bg-grid bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
 
-            {/* Section Réseaux Sociaux sous la photo */}
-            <div className="mt-12 text-center">
-              <p className="text-gray-300 mb-4">Suivez-moi sur les réseaux</p>
-              <div className="flex justify-center gap-6">
-                {socialLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl flex items-center justify-center text-2xl text-blue-400 hover:from-blue-800 hover:to-blue-700 hover:text-blue-300 hover:scale-110 transition-all duration-300 shadow-lg"
-                    aria-label={link.label}
-                  >
-                    {link.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
+      <div className="container-x relative grid min-h-[calc(100vh-4rem)] items-center gap-14 py-20 lg:grid-cols-[1.25fr_1fr]">
+        <div className="animate-rise">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft px-3 py-1 text-xs font-medium text-accent">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            {profile.availability}
+          </span>
+
+          <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            {profile.firstName}
+            <br />
+            <span className="text-accent">{profile.lastName}</span>
+          </h1>
+
+          <p className="mt-4 text-xl font-semibold text-slate-200 md:text-2xl">
+            {profile.title} · {profile.tagline}
+          </p>
+
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">{profile.pitch}</p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#projects" className="btn-primary">
+              Voir mes projets <FaArrowRight className="text-xs" />
+            </a>
+            <a href={profile.cvPath} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <FaFileAlt /> Consulter mon CV
+            </a>
           </div>
 
-          {/* Section Présentation */}
-          <div className="lg:w-3/5 order-1 lg:order-2 text-center lg:text-left">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Data x Code
-              </span>
-              <br />
-              <span className="text-3xl md:text-4xl">Maurice Birame DIOUF</span>
-            </h1>
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-400">
+            <span className="inline-flex items-center gap-2">
+              <FaMapMarkerAlt className="text-accent" /> {profile.location}
+            </span>
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+              <FaGithub className="text-lg" /> {profile.githubHandle}
+            </a>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+              <FaLinkedin className="text-lg" /> LinkedIn
+            </a>
+          </div>
+        </div>
 
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 font-medium">
-              Data Analyst
-            </p>
-
-            <p className="text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
-              Passionné par la fusion des données et du code, je transforme des insights analytiques en solutions technologiques robustes.
-              En quête d'un poste junior où je pourrai appliquer mon expertise double en analyse de données et développement full-stack.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <button
-                onClick={handleDownloadCV}
-                className="btn-primary flex items-center justify-center gap-2"
-              >
-                <FaDownload />
-                Voir CV
-              </button>
-
-              <a
-                href="#contact"
-                className="btn-secondary flex items-center justify-center gap-2"
-              >
-                <FaEnvelope />
-                Me Contacter
-              </a>
-            </div>
-
-            <div className="flex items-center justify-center lg:justify-start gap-6 text-gray-400">
-              <div className="flex items-center gap-2">
-                <FaMapMarkerAlt className="text-primary" />
-                <span>Malika, Dakar</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaPhone className="text-primary" />
-                <span>+221 77 865 69 61</span>
-              </div>
+        <div className="relative mx-auto w-full max-w-sm animate-rise [animation-delay:150ms]">
+          <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-accent/40 via-transparent to-transparent blur-2xl" />
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink-800 shadow-card">
+            <img
+              src={profilImage}
+              alt={`Portrait de ${profile.fullName}`}
+              className="aspect-[4/5] w-full object-cover object-top"
+              loading="eager"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-950/90 to-transparent p-5">
+              <p className="font-mono text-xs uppercase tracking-widest text-accent">Dernière mission</p>
+              <p className="mt-1 text-sm font-medium text-white">Pipeline IoT & dashboards énergétiques — CER2E</p>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="container-x relative pb-16">
+        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.06] md:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="bg-ink-900 px-6 py-5">
+              <dt className="order-2 text-xs text-slate-400">{s.label}</dt>
+              <dd className="text-2xl font-bold text-white md:text-3xl">{s.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

@@ -1,207 +1,105 @@
 import { useState } from 'react';
+import { FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaPaperPlane, FaPhone } from 'react-icons/fa';
+import useReveal from '../hooks/useReveal';
+import { profile } from '../data/profile';
 
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
+const channels = [
+  { icon: <FaEnvelope />, label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { icon: <FaPhone />, label: 'Téléphone', value: profile.phone, href: profile.phoneHref },
+  { icon: <FaLinkedin />, label: 'LinkedIn', value: profile.fullName, href: profile.linkedin, external: true },
+  { icon: <FaGithub />, label: 'GitHub', value: profile.githubHandle, href: profile.github, external: true },
+];
+
+const inputClass =
+  'w-full rounded-lg border border-white/10 bg-ink-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition-colors focus:border-accent';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+  const ref = useReveal();
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
 
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const socialLinks = [
-    {
-      icon: <FaGithub className="text-2xl" />,
-      href: 'https://github.com/Maurice-06',
-      label: 'GitHub',
-      username: 'Maurice-06',
-      color: 'from-gray-800 to-gray-900',
-      hoverColor: 'hover:from-gray-900 hover:to-black'
-    },
-    {
-      icon: <FaLinkedin className="text-2xl" />,
-      href: 'https://linkedin.com/in/ton-username',
-      label: 'LinkedIn',
-      username: 'Maurice Birame DIOUF',
-      color: 'from-blue-700 to-blue-800',
-      hoverColor: 'hover:from-blue-800 hover:to-blue-900'
-    },
-    {
-      icon: <FaEnvelope className="text-2xl" />,
-      href: 'mailto:mauricebiramed@gmail.com',
-      label: 'Email',
-      username: 'mauricebiramed@gmail.com',
-      color: 'from-red-500 to-red-600',
-      hoverColor: 'hover:from-red-600 hover:to-red-700'
-    }
-  ];
-
-  const handleSubmit = (e) => {
+  // Sans backend : on ouvre le client mail avec le message pré-rempli.
+  const onSubmit = (e) => {
     e.preventDefault();
-    // Ici, vous pouvez ajouter la logique pour envoyer l'email
-    console.log('Formulaire soumis:', formData);
-    alert('Message envoyé avec succès !');
-    setFormData({ name: '', email: '', subject: '', message: '' });
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const subject = encodeURIComponent(form.subject || `Contact portfolio — ${form.name}`);
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
   };
 
   return (
-    <section id="contact" className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">Contactez-moi</h2>
-          <p className="text-xl text-center text-gray-300 mb-12 max-w-3xl mx-auto">
-            Discutons de vos projets et collaborons pour créer quelque chose d'extraordinaire
-          </p>
-        </div>
+    <section id="contact" className="section bg-ink-900/40">
+      <div ref={ref} className="container-x reveal">
+        <span className="eyebrow">Contact</span>
+        <h2 className="section-title">Travaillons ensemble</h2>
+        <p className="section-lead">
+          Un poste junior, une alternance ou une mission data ? Je réponds généralement sous 24 heures.
+        </p>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Informations de contact */}
-          <div>
-            <h3 className="text-2xl font-bold mb-8">Restons connectés</h3>
-
-            <div className="space-y-6 mb-12">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <FaEnvelope className="text-xl" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Email</h4>
-                  <a href="mailto:mauricebiramed@gmail.com" className="text-gray-300 hover:text-white transition-colors">
-                    mauricebiramed@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <FaPhone className="text-xl" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Téléphone</h4>
-                  <a href="tel:+221778656961" className="text-gray-300 hover:text-white transition-colors">
-                    +221 77 865 69 61
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <FaMapMarkerAlt className="text-xl" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Localisation</h4>
-                  <p className="text-gray-300">Malika, Dakar, Sénégal</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Section Réseaux Sociaux */}
-            <div>
-              <h3 className="text-2xl font-bold mb-8">Suivez-moi sur les réseaux</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`bg-gradient-to-r ${social.color} ${social.hoverColor} rounded-xl p-4 transition-all duration-300 transform hover:-translate-y-1 group`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                        {social.icon}
-                      </div>
-                      <div>
-                        <p className="font-bold">{social.label}</p>
-                        <p className="text-sm text-gray-300 group-hover:text-white">{social.username}</p>
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Formulaire de contact */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
-            <h3 className="text-2xl font-bold mb-8">Envoyez-moi un message</h3>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block mb-2 font-medium">Nom complet</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Votre nom"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block mb-2 font-medium">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="votre@email.com"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block mb-2 font-medium">Sujet</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Sujet de votre message"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block mb-2 font-medium">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="6"
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  placeholder="Votre message..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3"
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.3fr]">
+          <div className="space-y-3">
+            {channels.map((c) => (
+              <a
+                key={c.label}
+                href={c.href}
+                target={c.external ? '_blank' : undefined}
+                rel={c.external ? 'noopener noreferrer' : undefined}
+                className="card flex items-center gap-4 p-4"
               >
-                <FaPaperPlane />
-                Envoyer le message
-              </button>
-            </form>
+                <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg bg-accent-soft text-accent">
+                  {c.icon}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-xs uppercase tracking-wider text-slate-500">{c.label}</span>
+                  <span className="block truncate text-sm font-medium text-white">{c.value}</span>
+                </span>
+              </a>
+            ))}
+            <p className="flex items-center gap-2 px-1 pt-2 text-sm text-slate-400">
+              <FaMapMarkerAlt className="text-accent" /> {profile.location}
+            </p>
           </div>
+
+          <form onSubmit={onSubmit} className="card p-6 md:p-8">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-slate-400">Nom</span>
+                <input name="name" value={form.name} onChange={onChange} required className={inputClass} placeholder="Votre nom" />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-slate-400">Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={onChange}
+                  required
+                  className={inputClass}
+                  placeholder="vous@exemple.com"
+                />
+              </label>
+            </div>
+            <label className="mt-4 block">
+              <span className="mb-1.5 block text-xs font-medium text-slate-400">Sujet</span>
+              <input name="subject" value={form.subject} onChange={onChange} className={inputClass} placeholder="Opportunité, mission, question…" />
+            </label>
+            <label className="mt-4 block">
+              <span className="mb-1.5 block text-xs font-medium text-slate-400">Message</span>
+              <textarea
+                name="message"
+                value={form.message}
+                onChange={onChange}
+                required
+                rows={5}
+                className={`${inputClass} resize-y`}
+                placeholder="Décrivez votre besoin en quelques lignes."
+              />
+            </label>
+            <button type="submit" className="btn-primary mt-6 w-full sm:w-auto">
+              <FaPaperPlane /> Envoyer le message
+            </button>
+            <p className="mt-3 text-xs text-slate-500">Le formulaire ouvre votre messagerie avec le message pré-rempli.</p>
+          </form>
         </div>
       </div>
     </section>

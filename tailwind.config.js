@@ -1,43 +1,41 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
-      colors: {
-        primary: '#00FFFF',
-        secondary: '#0080FF',
-        accent: '#00FFFF',
-        dark: '#000000',
-        light: '#1a1a1a',
-        gray: {
-          50: '#f9fafb',
-          100: '#f3f4f6',
-          200: '#e5e7eb',
-          300: '#d1d5db',
-          400: '#9ca3af',
-          500: '#6b7280',
-          600: '#4b5563',
-          700: '#374151',
-          800: '#1f2937',
-          900: '#111827',
-        },
-        twitter: '#1DA1F2',
-        linkedin: '#0077B5',
-        github: '#333333',
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s infinite',
+      colors: {
+        ink: {
+          950: '#070B14',
+          900: '#0B1220',
+          800: '#111A2E',
+          700: '#1B2640',
+        },
+        accent: {
+          DEFAULT: '#2DD4BF',
+          strong: '#14B8A6',
+          soft: 'rgba(45, 212, 191, 0.12)',
+        },
+      },
+      boxShadow: {
+        glow: '0 0 60px -15px rgba(45, 212, 191, 0.45)',
+        card: '0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 40px -24px rgba(0,0,0,0.6)',
+      },
+      backgroundImage: {
+        grid: 'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
-        }
-      }
+        rise: {
+          from: { opacity: '0', transform: 'translateY(16px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        rise: 'rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
+      },
     },
   },
   plugins: [],

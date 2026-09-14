@@ -1,109 +1,81 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { navLinks, profile } from '../data/profile';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-gray-700">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
-            <a href="#home" className="text-2xl font-bold text-white">
-              <span className="text-primary">Data</span> x <span className="text-primary">Code</span>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || open ? 'border-b border-white/[0.06] bg-ink-950/85 backdrop-blur-md' : 'bg-transparent'
+      }`}
+    >
+      <nav className="container-x flex h-16 items-center justify-between">
+        <a href="#home" className="flex items-center gap-2 font-semibold text-white" onClick={() => setOpen(false)}>
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent font-mono text-sm font-bold text-ink-950">
+            MD
+          </span>
+          <span className="hidden sm:inline">{profile.fullName}</span>
+        </a>
+
+        <ul className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="rounded-md px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+          <li className="ml-3">
+            <a href={profile.cvPath} target="_blank" rel="noopener noreferrer" className="btn-primary !px-4 !py-2">
+              CV
             </a>
-          </div>
+          </li>
+        </ul>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <a href="#home" className="text-white hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
-                Accueil
-              </a>
-              <a href="#about" className="text-white hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
-                À Propos
-              </a>
-              <a href="#skills" className="text-white hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
-                Compétences
-              </a>
-              <a href="#projects" className="text-white hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
-                Projets
-              </a>
-              <a href="#education" className="text-white hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
-                Formation
-              </a>
-              <a href="#contact" className="text-white hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
-                Contact
-              </a>
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="text-white hover:text-primary p-2"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-black/95 border-t border-gray-700">
-              <a
-                href="#home"
-                className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-                onClick={toggleMenu}
-              >
-                Accueil
-              </a>
-              <a
-                href="#about"
-                className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-                onClick={toggleMenu}
-              >
-                À Propos
-              </a>
-              <a
-                href="#skills"
-                className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-                onClick={toggleMenu}
-              >
-                Compétences
-              </a>
-              <a
-                href="#projects"
-                className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-                onClick={toggleMenu}
-              >
-                Projets
-              </a>
-              <a
-                href="#education"
-                className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-                onClick={toggleMenu}
-              >
-                Formation
-              </a>
-              <a
-                href="#contact"
-                className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-                onClick={toggleMenu}
-              >
-                Contact
-              </a>
-            </div>
-          </div>
-        )}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="rounded-md p-2 text-white md:hidden"
+          aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-expanded={open}
+        >
+          {open ? <FaTimes size={22} /> : <FaBars size={22} />}
+        </button>
       </nav>
+
+      {open && (
+        <div className="container-x border-t border-white/[0.06] pb-4 md:hidden">
+          <ul className="flex flex-col py-2">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-md px-3 py-3 text-base text-slate-200 hover:bg-white/[0.04]"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href={profile.cvPath} target="_blank" rel="noopener noreferrer" className="btn-primary w-full">
+            Télécharger mon CV
+          </a>
+        </div>
+      )}
     </header>
   );
 };
